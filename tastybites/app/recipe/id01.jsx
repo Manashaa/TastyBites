@@ -13,6 +13,7 @@ const recipes = [
       'Spread on toasted bread and serve.'
     ],
   },
+  
   {
     id: 'no.002',
     title: 'Chicken Rice Bowl',
@@ -53,13 +54,15 @@ export default function RecipePage() {
     <ScrollView className="flex-1 bg-white px-4 py-6">
       <Image source={recipe.image} className="w-full h-60 rounded-xl mb-4" />
       
-      <Text className="text-3xl font-bold text-orange-700 mb-2">{recipe.title}</Text>
+      <Text className="text-3xl font-extrabold text-gray-900 mb-4">{recipe.title}</Text>
+
 
       <Text className="text-lg font-semibold mb-1 text-gray-800">🧂 Ingredients:</Text>
       {recipe.ingredients.map((item, index) => (
         <Text key={index} className="text-base text-gray-600">• {item}</Text>
       ))}
-
+      <View className="my-3 border-t border-gray-300" />
+   
       <Text className="text-lg font-semibold mt-4 mb-1 text-gray-800">📋 Steps:</Text>
       {recipe.steps.map((step, index) => (
         <Text key={index} className="text-base text-gray-600">{index + 1}. {step}</Text>

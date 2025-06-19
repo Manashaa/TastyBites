@@ -1,5 +1,6 @@
 import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { Link } from 'expo-router';
+import Header from '../components/Header'; 
 
 const recipes = [
   {
@@ -10,7 +11,7 @@ const recipes = [
     steps: [
       'Toast the bread slices.',
       'Mash the avocado with salt and pepper.',
-      'Spread on toasted bread and serve.'
+      'Spread on toasted bread and serve.',
     ],
   },
   {
@@ -21,7 +22,7 @@ const recipes = [
     steps: [
       'Cook rice and set aside.',
       'Stir-fry chicken with soy sauce.',
-      'Combine and serve hot.'
+      'Combine and serve hot.',
     ],
   },
   {
@@ -32,24 +33,30 @@ const recipes = [
     steps: [
       'Boil pasta.',
       'Cook cream sauce with cheese.',
-      'Mix together and enjoy.'
+      'Mix together and enjoy.',
     ],
   },
 ];
 
 export default function Home() {
   return (
+    
     <ScrollView className="flex-1 bg-white px-4 py-6">
-      <Text className="text-3xl font-bold text-center text-orange-600 mb-6">🍽️ TastyBites</Text>
+      <Text className="text-3xl font-bold text-center text-orange-600 mb-6">
+        🍽️ TastyBites
+      </Text>
 
       {recipes.map((item) => (
         <Link href={`/recipe/${item.id}`} asChild key={item.id}>
-          <TouchableOpacity className="mb-6">
-            <Image source={item.image} className="w-full h-48 rounded-xl" />
-            <Text className="text-xl font-semibold mt-2">{item.title}</Text>
+          <TouchableOpacity className="mb-6 bg-white rounded-xl shadow-lg">
+            <Image source={item.image} className="w-full h-48 rounded-t-xl" />
+            <View className="p-4">
+              <Text className="text-xl font-bold text-gray-800">{item.title}</Text>
+            </View>
           </TouchableOpacity>
         </Link>
       ))}
     </ScrollView>
   );
+  <Header />
 }
