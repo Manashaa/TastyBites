@@ -1,4 +1,4 @@
-import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { Link } from 'expo-router';
 
 const recipes = [
@@ -10,7 +10,7 @@ const recipes = [
     steps: [
       'Toast the bread slices.',
       'Mash the avocado with salt and pepper.',
-      'Spread on toasted bread and serve.',
+      'Spread on toasted bread and serve.'
     ],
   },
   {
@@ -21,42 +21,32 @@ const recipes = [
     steps: [
       'Cook rice and set aside.',
       'Stir-fry chicken with soy sauce.',
-      'Combine and serve hot.',
+      'Combine and serve hot.'
     ],
   },
   {
-    id: 'no.oo3',
+    id: 'no.003',
     title: 'Pasta Alfredo',
     image: require('../assets/images/Pasta01.jpeg'),
     ingredients: ['Pasta', 'Cream', 'Cheese'],
     steps: [
       'Boil pasta.',
       'Cook cream sauce with cheese.',
-      'Mix together and enjoy.',
+      'Mix together and enjoy.'
     ],
   },
 ];
 
 export default function Home() {
   return (
-    <ScrollView className="flex-1 bg-white p-4">
-      <Text className="text-3xl font-bold text-center mb-2">🍽️ TastyBites</Text>
-      <Text className="text-base text-gray-500 text-center mb-4">
-        Your recipe app starts here!
-      </Text>
+    <ScrollView className="flex-1 bg-white px-4 py-6">
+      <Text className="text-3xl font-bold text-center text-orange-600 mb-6">🍽️ TastyBites</Text>
 
-      {recipes.map((recipe) => (
-        <Link href={`/recipe/${recipe.id}`} key={recipe.id} asChild>
-          <TouchableOpacity className="mb-4 bg-gray-100 rounded-xl overflow-hidden shadow">
-            <Image
-              source={recipe.image}
-              className="w-full h-48"
-              resizeMode="cover"
-            />
-            <View className="p-3">
-              <Text className="text-xl font-semibold">{recipe.title}</Text>
-              <Text className="text-gray-500">{recipe.ingredients.join(', ')}</Text>
-            </View>
+      {recipes.map((item) => (
+        <Link href={`/recipe/${item.id}`} asChild key={item.id}>
+          <TouchableOpacity className="mb-6">
+            <Image source={item.image} className="w-full h-48 rounded-xl" />
+            <Text className="text-xl font-semibold mt-2">{item.title}</Text>
           </TouchableOpacity>
         </Link>
       ))}
