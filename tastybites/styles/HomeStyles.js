@@ -22,7 +22,8 @@ export default StyleSheet.create({
   
   gridItem: {
     width: '48%',
-    backgroundColor: '#339966',
+    height:'50%',
+    backgroundColor: '#262626',
     borderRadius: 10,
     marginBottom: 15,
     overflow: 'hidden',

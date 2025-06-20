@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
     borderBlockColor:'#ff8400',
-    backgroundColor:'#331a00',
+   // backgroundColor:'#331a00',
   },
   title: {
     fontSize: 50,

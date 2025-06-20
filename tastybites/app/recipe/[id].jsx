@@ -24,10 +24,7 @@ export default function RecipePage() {
 
   return (
     <ScrollView style={styles.container}>
-      {/*  Back Button */}
-      <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-        <Text style={styles.backText}>← Back</Text>
-      </TouchableOpacity>
+
 
    
       <Image source={recipe.image} style={styles.image} />
@@ -42,6 +39,12 @@ export default function RecipePage() {
       {recipe.steps.map((step, index) => (
         <Text key={index} style={styles.textItem}>{index + 1}. {step}</Text>
       ))}
+
+            {/*  Back Button */}
+      <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
+        <Text style={styles.backText}>← Back</Text>
+      </TouchableOpacity>
+      
     </ScrollView>
   );
 }
