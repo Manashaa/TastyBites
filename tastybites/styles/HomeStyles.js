@@ -12,15 +12,17 @@ export default StyleSheet.create({
     textAlign: 'center',
   },
 
-  // 👇 Grid Styles
+  // Grid Styles
   gridContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
+    backgroundColor:'#996600',
   },
+  
   gridItem: {
     width: '48%',
-    backgroundColor: '#fff',
+    backgroundColor: '#339966',
     borderRadius: 10,
     marginBottom: 15,
     overflow: 'hidden',

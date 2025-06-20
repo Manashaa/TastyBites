@@ -17,14 +17,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
+    borderBlockColor:'#ff8400',
+    backgroundColor:'#331a00',
   },
   title: {
-    fontSize: 26,
+    fontSize: 50,
     fontWeight: 'bold',
   },
   subtitle: {
     fontSize: 14,
-    color: '#666',
+    color: '#ff8400',
     marginTop: 4,
   },
 });
