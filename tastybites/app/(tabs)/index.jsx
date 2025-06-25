@@ -5,23 +5,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from '../../styles/HomeStyles';
 import Header from '../../components/Header';
 import { LinearGradient } from 'expo-linear-gradient';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../../utils/firebaseConfig';
 
 const categories = ['All', 'Breakfast', 'Lunch', 'Dessert', 'Healthy', 'Spicy'];
 
-const recipes = [
-  { id: '1', title: 'Avocado Toast', image: require('../../assets/images/Avocado01.jpeg'), category: 'Breakfast' },
-  { id: '2', title: 'Chicken Rice Bowl', image: require('../../assets/images/Chicken01.jpeg'), category: 'Lunch' },
-  { id: '3', title: 'Fruit Salad', image: require('../../assets/images/Fruit01.jpeg'), category: 'Healthy' },
-  { id: '4', title: 'Chocolate Cake', image: require('../../assets/images/Cake01.jpeg'), category: 'Dessert' },
-  { id: '5', title: 'Spicy Ramen', image: require('../../assets/images/Ramen01.jpeg'), category: 'Spicy' },
-];
-
 export default function Home() {
+  const [recipes, setRecipes] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [favoriteIds, setFavoriteIds] = useState([]);
 
-  // Load favorites from AsyncStorage
+  // Load favorites
   useEffect(() => {
     const loadFavorites = async () => {
       const data = await AsyncStorage.getItem('favorites');
@@ -30,7 +25,23 @@ export default function Home() {
     loadFavorites();
   }, []);
 
-  // Toggle favorite state
+  // Fetch from Firebase
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, 'recipes'));
+        const firebaseData = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setRecipes(firebaseData);
+      } catch (error) {
+        console.error('Error fetching recipes:', error);
+      }
+    };
+    fetchRecipes();
+  }, []);
+
   const toggleFavorite = async (id) => {
     const updated = favoriteIds.includes(id)
       ? favoriteIds.filter((favId) => favId !== id)
@@ -41,7 +52,7 @@ export default function Home() {
 
   const filteredRecipes = recipes.filter((item) => {
     const matchesCategory = selectedCategory === 'All' || item.category === selectedCategory;
-    const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = item.title?.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
@@ -50,7 +61,7 @@ export default function Home() {
       <ScrollView contentContainerStyle={styles.container}>
         <Header />
 
-        {/*Search Bar */}
+        {/* Search Bar */}
         <TextInput
           placeholder="Search recipes..."
           value={searchQuery}
@@ -66,7 +77,7 @@ export default function Home() {
           }}
         />
 
-        {/* Category Scroll */}
+        {/* Categories */}
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginVertical: 10, paddingHorizontal: 8 }}>
           {categories.map((cat) => (
             <TouchableOpacity
@@ -93,7 +104,14 @@ export default function Home() {
             <View key={item.id} style={styles.gridItem}>
               <Link href={`/recipe/${item.id}`} asChild>
                 <TouchableOpacity>
-                  <Image source={item.image} style={styles.gridImage} />
+                  <Image
+                    source={
+                      item.imageUrl
+                        ? { uri: item.imageUrl }
+                        : require('../../assets/images/default.png') // Fallback image
+                    }
+                    style={styles.gridImage}
+                  />
                   <Text style={styles.gridTitle}>{item.title}</Text>
                 </TouchableOpacity>
               </Link>
