@@ -3,13 +3,12 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAddaBoN4xdZFTUxhIFZgJRBgvbOSyOg40",
-  authDomain: "tastybites-ab8a3.firebaseapp.com",
-  projectId: "tastybites-ab8a3",
-  storageBucket: "tastybites-ab8a3.firebasestorage.app",
-  messagingSenderId: "1074274527667",
-  appId: "1:1074274527667:web:cd29346014ebd15eb643c6",
-  measurementId: "G-WLVPGH0WB2"
+  apiKey: "AIzaSyD0zZnOkPdaWckgCq1FpA4bWc9nIqHoJfw",
+  authDomain: "tastybites-b8225.firebaseapp.com",
+  projectId: "tastybites-b8225",
+  storageBucket: "tastybites-b8225.firebasestorage.app",
+  messagingSenderId: "312143518883",
+  appId: "1:312143518883:web:0b2f9cf33cec5dcb64b316"
 };
 
 

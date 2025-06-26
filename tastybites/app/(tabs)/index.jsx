@@ -8,6 +8,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../utils/firebaseConfig';
 
+
 const categories = ['All', 'Breakfast', 'Lunch', 'Dessert', 'Healthy', 'Spicy'];
 
 export default function Home() {
@@ -108,9 +109,10 @@ export default function Home() {
                     source={
                       item.imageUrl
                         ? { uri: item.imageUrl }
-                        : require('../../assets/images/default.png') // Fallback image
+                        : require('../../assets/images/default.jpg') // Fallback image
                     }
                     style={styles.gridImage}
+                  
                   />
                   <Text style={styles.gridTitle}>{item.title}</Text>
                 </TouchableOpacity>
