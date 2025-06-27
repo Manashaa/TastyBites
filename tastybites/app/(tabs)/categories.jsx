@@ -1,36 +1,71 @@
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useEffect, useState } from 'react';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../../utils/firebaseConfig';
+import styles from '../../styles/HomeStyles';
 import { Link } from 'expo-router';
 
-const categories = ['Breakfast', 'Lunch', 'Dessert', 'Healthy', 'Spicy'];
+export default function CategoryPage() {
+  const { category } = useLocalSearchParams();
+  const [recipes, setRecipes] = useState([]);
+  const router = useRouter();
 
-export default function Categories() {
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, 'recipes'));
+        const firebaseData = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        const filtered = firebaseData.filter(item => item.category === category);
+        setRecipes(filtered);
+      } catch (error) {
+        console.error('Error fetching recipes:', error);
+      }
+    };
+
+    fetchRecipes();
+  }, [category]);
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>📂 Categories</Text>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.title}>{category} Recipes</Text>
 
-      <ScrollView contentContainerStyle={styles.list}>
-        {categories.map((cat) => (
-          <Link href={`/category/${cat}`} asChild key={cat}>
-            <TouchableOpacity style={styles.categoryBox}>
-              <Text style={styles.categoryText}>{cat}</Text>
-            </TouchableOpacity>
-          </Link>
-        ))}
-      </ScrollView>
-    </View>
+      {recipes.length === 0 ? (
+        <Text style={{ textAlign: 'center', marginTop: 20, color: '#777' }}>
+          No recipes found for this category.
+        </Text>
+      ) : (
+        <View style={styles.gridContainer}>
+          {recipes.map((item) => (
+            <View key={item.id} style={styles.gridItem}>
+              <Link href={`/recipe/${item.id}`} asChild>
+                <TouchableOpacity>
+                  <Image
+                    source={
+                      item.imageUrl
+                        ? { uri: item.imageUrl }
+                        : require('../../assets/images/default.jpg')
+                    }
+                    style={styles.gridImage}
+                  />
+                  <Text style={styles.gridTitle}>{item.title}</Text>
+                </TouchableOpacity>
+              </Link>
+            </View>
+          ))}
+        </View>
+      )}
+
+      <TouchableOpacity
+        onPress={() => router.back()}
+        style={{ alignSelf: 'center', marginVertical: 20 }}
+      >
+        <Text style={{ color: '#f39c12', fontWeight: 'bold' }}>← Back</Text>
+      </TouchableOpacity>
+    </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: '#fff' },
-  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 20, textAlign: 'center' },
-  list: { paddingBottom: 20 },
-  categoryBox: {
-    backgroundColor: '#f39c12',
-    padding: 16,
-    borderRadius: 10,
-    marginBottom: 12,
-    alignItems: 'center',
-  },
-  categoryText: { fontSize: 18, color: '#fff', fontWeight: 'bold' },
-});
