@@ -20,6 +20,9 @@ export default StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    marginTop: 8,
+    gap: 12,
   },
   
   gridItem: {

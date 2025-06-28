@@ -6,8 +6,43 @@ import styles from '../../styles/HomeStyles';
 import Header from '../../components/Header';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../utils/firebaseConfig';
+import Animated, { FadeIn } from 'react-native-reanimated';
 
+// Define your categories here
 const categories = ['All', 'Breakfast', 'Lunch', 'Dessert', 'Healthy', 'Spicy'];
+
+// 💡 Reusable CategoryButton Component
+function CategoryButton({ label, isSelected, onPress }) {
+  return (
+    <Animated.View entering={FadeIn}>
+      <TouchableOpacity
+        onPress={onPress}
+        style={{
+          backgroundColor: isSelected ? '#ca8150' : '#8d5535',
+          paddingVertical: 6,
+          paddingHorizontal: 14,
+          borderRadius: 20,
+          marginHorizontal: 5,
+          maxWidth: 120,
+          flexShrink: 1,
+        }}
+      >
+        <Text
+          style={{
+            color: '#fff',
+            fontWeight: 'bold',
+            textAlign: 'center',
+            fontSize: 14,
+          }}
+          numberOfLines={1}
+          ellipsizeMode="tail"
+        >
+          {label}
+        </Text>
+      </TouchableOpacity>
+    </Animated.View>
+  );
+}
 
 export default function Home() {
   const [recipes, setRecipes] = useState([]);
@@ -54,9 +89,10 @@ export default function Home() {
   });
 
   return (
-    <ScrollView contentContainerStyle={{ backgroundColor: '#f5f2ef', flexGrow: 1 }}>
+    <ScrollView contentContainerStyle={{ backgroundColor: '#f5f2ef', flexGrow: 1, paddingBottom: 20 }}>
       <Header />
 
+      {/* Search */}
       <TextInput
         placeholder="Search recipes..."
         placeholderTextColor="#8d5535"
@@ -74,29 +110,25 @@ export default function Home() {
         }}
       />
 
+      {/* Category Scroll */}
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        style={{ marginVertical: 10, paddingHorizontal: 8 }}
+        style={{ marginTop: 10 }}
+        contentContainerStyle={{ paddingHorizontal: 8, paddingBottom: 4 }}
       >
         {categories.map((cat) => (
-          <TouchableOpacity
+          <CategoryButton
             key={cat}
+            label={cat}
+            isSelected={selectedCategory === cat}
             onPress={() => setSelectedCategory(cat)}
-            style={{
-              backgroundColor: selectedCategory === cat ? '#ca8150' : '#8d5535',
-              paddingVertical: 6,
-              paddingHorizontal: 12,
-              borderRadius: 20,
-              marginHorizontal: 5,
-            }}
-          >
-            <Text style={{ color: '#fff', fontWeight: 'bold' }}>{cat}</Text>
-          </TouchableOpacity>
+          />
         ))}
       </ScrollView>
 
-      <View style={styles.gridContainer}>
+      {/* Recipe Grid */}
+      <View style={[styles.gridContainer, { marginTop: 4 }]}>
         {filteredRecipes.map((item) => (
           <View key={item.id} style={styles.gridItem}>
             <Link href={`/recipe/${item.id}`} asChild>
