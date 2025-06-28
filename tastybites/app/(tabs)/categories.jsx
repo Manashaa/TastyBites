@@ -22,15 +22,32 @@ export default function Categories() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: '#fff' },
-  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 20, textAlign: 'center' },
-  list: { paddingBottom: 20 },
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#f5f2ef', // soft neutral background
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center',
+    color: '#3d1520',
+  },
+  list: {
+    paddingBottom: 20,
+  },
   categoryBox: {
-    backgroundColor: '#f39c12',
+    backgroundColor: '#ca8150',
     padding: 16,
     borderRadius: 10,
     marginBottom: 12,
     alignItems: 'center',
+    elevation: 3,
   },
-  categoryText: { fontSize: 18, color: '#fff', fontWeight: 'bold' },
+  categoryText: {
+    fontSize: 18,
+    color: '#fff',
+    fontWeight: 'bold',
+  },
 });

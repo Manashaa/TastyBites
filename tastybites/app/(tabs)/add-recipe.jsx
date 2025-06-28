@@ -39,8 +39,6 @@ export default function AddRecipe() {
       });
 
       Alert.alert('✅ Recipe added successfully!');
-      
-      // Clear inputs
       setTitle('');
       setImageUrl('');
       setCategory('');
@@ -53,14 +51,17 @@ export default function AddRecipe() {
   };
 
   return (
-    <ScrollView contentContainerStyle={{ padding: 20, backgroundColor: '#fff', flexGrow: 1 }}>
-      <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 20 }}>➕ Add New Recipe</Text>
+    <ScrollView contentContainerStyle={{ padding: 20, backgroundColor: '#f5f2ef', flexGrow: 1 }}>
+      <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 20, color: '#3d1520' }}>
+        ➕ Add New Recipe
+      </Text>
 
       <TextInput
         placeholder="Recipe Title"
         value={title}
         onChangeText={setTitle}
         style={styles.input}
+        placeholderTextColor="#888"
       />
 
       <TextInput
@@ -68,9 +69,9 @@ export default function AddRecipe() {
         value={imageUrl}
         onChangeText={setImageUrl}
         style={styles.input}
+        placeholderTextColor="#888"
       />
 
-      {/* 🖼 Live Image Preview */}
       {imageUrl !== '' && isValidUrl(imageUrl) && (
         <Image
           source={{ uri: imageUrl }}
@@ -84,12 +85,11 @@ export default function AddRecipe() {
         />
       )}
 
-      {/* 📦 Category Picker */}
       <Picker
         selectedValue={category}
         onValueChange={(itemValue) => setCategory(itemValue)}
         style={{
-          backgroundColor: '#f0f0f0',
+          backgroundColor: '#e4dbcf',
           marginBottom: 12,
           borderRadius: 10,
         }}
@@ -107,6 +107,7 @@ export default function AddRecipe() {
         value={ingredients}
         onChangeText={setIngredients}
         style={styles.input}
+        placeholderTextColor="#888"
       />
 
       <TextInput
@@ -116,18 +117,21 @@ export default function AddRecipe() {
         multiline
         numberOfLines={4}
         style={[styles.input, { height: 100 }]}
+        placeholderTextColor="#888"
       />
 
       <TouchableOpacity
         onPress={handleAddRecipe}
         style={{
-          backgroundColor: '#f39c12',
+          backgroundColor: '#ca8150',
           padding: 14,
           borderRadius: 10,
           marginTop: 10,
         }}
       >
-        <Text style={{ color: '#fff', fontWeight: 'bold', textAlign: 'center' }}>Submit Recipe</Text>
+        <Text style={{ color: '#fff', fontWeight: 'bold', textAlign: 'center' }}>
+          Submit Recipe
+        </Text>
       </TouchableOpacity>
     </ScrollView>
   );
@@ -135,10 +139,11 @@ export default function AddRecipe() {
 
 const styles = {
   input: {
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#e4dbcf',
     padding: 12,
     borderRadius: 10,
     marginBottom: 12,
     fontSize: 16,
+    color: '#3d1520',
   },
 };

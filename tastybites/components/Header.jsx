@@ -13,22 +13,19 @@ const styles = StyleSheet.create({
   header: {
     paddingTop: 40,
     paddingBottom: 16,
-    backgroundColor: '#f8f8f8',
+    backgroundColor: '#f5f2ef', 
     paddingHorizontal: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-    borderBlockColor:'#ff8400',
-   // backgroundColor:'#331a00',
+    borderBottomColor: '#ca8150', 
   },
   title: {
     fontSize: 50,
     fontWeight: 'bold',
+    color: '#3d1520', 
   },
   subtitle: {
     fontSize: 14,
-    color: '#ff8400',
+    color: '#8d5535', 
     marginTop: 4,
   },
 });
-
-/* */
