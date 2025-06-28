@@ -8,7 +8,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../utils/firebaseConfig';
 
-
 const categories = ['All', 'Breakfast', 'Lunch', 'Dessert', 'Healthy', 'Spicy'];
 
 export default function Home() {
@@ -17,7 +16,6 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [favoriteIds, setFavoriteIds] = useState([]);
 
-  // Load favorites
   useEffect(() => {
     const loadFavorites = async () => {
       const data = await AsyncStorage.getItem('favorites');
@@ -26,7 +24,6 @@ export default function Home() {
     loadFavorites();
   }, []);
 
-  // Fetch from Firebase
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
@@ -58,11 +55,10 @@ export default function Home() {
   });
 
   return (
-    <LinearGradient colors={['#fff', '#f0f0f0']} style={{ flex: 1 }}>
+    <LinearGradient colors={['#000', '#222']} style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={styles.container}>
         <Header />
 
-        {/* Search Bar */}
         <TextInput
           placeholder="Search recipes..."
           value={searchQuery}
@@ -78,28 +74,24 @@ export default function Home() {
           }}
         />
 
-        {/* Categories */}
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginVertical: 10, paddingHorizontal: 8 }}>
           {categories.map((cat) => (
             <TouchableOpacity
               key={cat}
               onPress={() => setSelectedCategory(cat)}
               style={{
-                backgroundColor: selectedCategory === cat ? '#f39c12' : '#eee',
+                backgroundColor: selectedCategory === cat ? '#f39c12' : '#444',
                 paddingVertical: 6,
                 paddingHorizontal: 12,
                 borderRadius: 20,
                 marginHorizontal: 5,
               }}
             >
-              <Text style={{ color: selectedCategory === cat ? '#fff' : '#333', fontWeight: 'bold' }}>
-                {cat}
-              </Text>
+              <Text style={{ color: '#fff', fontWeight: 'bold' }}>{cat}</Text>
             </TouchableOpacity>
           ))}
         </ScrollView>
 
-        {/* Recipe Cards */}
         <View style={styles.gridContainer}>
           {filteredRecipes.map((item) => (
             <View key={item.id} style={styles.gridItem}>
@@ -109,10 +101,9 @@ export default function Home() {
                     source={
                       item.imageUrl
                         ? { uri: item.imageUrl }
-                        : require('../../assets/images/default.jpg') // Fallback image
+                        : require('../../assets/images/default.jpg')
                     }
                     style={styles.gridImage}
-                  
                   />
                   <Text style={styles.gridTitle}>{item.title}</Text>
                 </TouchableOpacity>
